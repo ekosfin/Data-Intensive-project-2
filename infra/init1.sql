@@ -29,6 +29,11 @@ CREATE TABLE Permissions (
     RoleID INT REFERENCES Roles(RoleID)
 );
 
+CREATE TABLE Fob (
+    FobID SERIAL PRIMARY KEY,
+    UserID INT NOT NULL REFERENCES Users(UserID),
+);
+
 
 INSERT INTO Users (Name, Phone) VALUES
 ('Alice Johnson', '123-456-7890'),
