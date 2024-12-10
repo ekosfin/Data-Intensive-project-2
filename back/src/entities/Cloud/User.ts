@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 import { Admin } from "./Admins";
 import { Permission } from "./Permission";
-import { Fob } from "../Fob";
+import { Fob } from "./Fob";
 
 @Entity("Users")
 export class User {

@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
-import { User } from "./Cloud/User";
+import { User } from "./User";
 
 @Entity("Fob")
 export class Fob {

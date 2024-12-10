@@ -3,12 +3,14 @@ import * as dotenv from "dotenv";
 import { User } from "./entities/Cloud/User";
 import { Admin } from "./entities/Cloud/Admins";
 import { Office } from "./entities/Cloud/Office";
-import { Role } from "./entities/Role";
+import { Role } from "./entities/Cloud/Role";
 import { Permission } from "./entities/Cloud/Permission";
-import { Fob } from "./entities/Fob";
+import { Fob } from "./entities/Cloud/Fob";
 import { Room } from "./entities/Office/Rooms";
 import { RoomPermission } from "./entities/Office/RoomPermissions";
 import { Permission as OfficePermissions } from "./entities/Office/Permissions";
+import { Role as OfficeRole } from "./entities/Office/Role";
+import { Fob as OfficeFob } from "./entities/Office/Fob";
 
 dotenv.config();
 
@@ -32,7 +34,7 @@ export const irelandDataSource = new DataSource({
   password: process.env.IRELAND_DB_PASSWORD,
   database: process.env.IRELAND_DB_DATABASE,
   ssl: true,
-  entities: [Role, OfficePermissions, Room, RoomPermission, Fob],
+  entities: [OfficeRole, OfficePermissions, Room, RoomPermission, OfficeFob],
   synchronize: true,
 });
 
@@ -44,6 +46,6 @@ export const germanyDataSource = new DataSource({
   password: process.env.GERMANY_DB_PASSWORD,
   database: process.env.GERMANY_DB_DATABASE,
   ssl: true,
-  entities: [Role, OfficePermissions, Room, RoomPermission, Fob],
+  entities: [OfficeRole, OfficePermissions, Room, RoomPermission, OfficeFob],
   synchronize: true,
 });
