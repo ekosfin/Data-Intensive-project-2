@@ -1,11 +1,14 @@
 import * as express from "express";
-import { Request, Response } from "express";
 import {
   swedenDataSource,
   irelandDataSource,
   germanyDataSource,
 } from "./data-source";
 import { User } from "./entities/Cloud/User";
+import { Role } from "./entities/Cloud/Role";
+import { Permission } from "./entities/Cloud/Permission";
+import { Office } from "./entities/Cloud/Office";
+import { Admin } from "./entities/Cloud/Admins";
 
 var cors = require("cors");
 const app = express();
@@ -24,6 +27,7 @@ async function initializeDatabases() {
 app.get("/users", async (req, res) => {
   try {
     const users = await swedenDataSource.getRepository(User).find();
+    console.log(users);
     res.json(users);
   } catch (error) {
     res.status(500).send("Failed to fetch users.");
@@ -31,11 +35,11 @@ app.get("/users", async (req, res) => {
 });
 
 app.post("/user", async (req, res) => {
-  const { Name, Phone } = req.body;
+  const { name, phone } = req.body;
   try {
     const newUser = swedenDataSource
       .getRepository(User)
-      .create({ Name, Phone });
+      .create({ name, phone });
     await swedenDataSource.getRepository(User).save(newUser);
     res.status(201).json(newUser);
   } catch (error) {
@@ -43,10 +47,46 @@ app.post("/user", async (req, res) => {
   }
 });
 
-app.delete("/:id", async (req, res) => {
-  const UserID = parseInt(req.params.id);
+app.get("/roles", async (req, res) => {
   try {
-    await swedenDataSource.getRepository(User).delete({ UserID });
+    const roles = await swedenDataSource.getRepository(Role).find();
+    res.json(roles);
+  } catch (error) {
+    res.status(500).send("Failed to fetch roles.");
+  }
+});
+
+app.get("/permissions", async (req, res) => {
+  try {
+    const permissions = await swedenDataSource.getRepository(Permission).find();
+    res.json(permissions);
+  } catch (error) {
+    res.status(500).send("Failed to fetch permissions.");
+  }
+});
+
+app.get("/offices", async (req, res) => {
+  try {
+    const offices = await swedenDataSource.getRepository(Office).find();
+    res.json(offices);
+  } catch (error) {
+    res.status(500).send("Failed to fetch offices.");
+  }
+});
+
+app.get("/admins", async (req, res) => {
+  try {
+    const admins = await swedenDataSource.getRepository(Admin).find();
+    res.json(admins);
+  } catch (error) {
+    res.status(500).send("Failed to fetch admins.");
+  }
+});
+
+app.delete("/:id", async (req, res) => {
+  const userid = parseInt(req.params.id);
+  try {
+    await swedenDataSource.getRepository(User).delete({ userid });
     res.status(204).send();
   } catch (error) {
     res.status(500).send("Failed to delete user.");

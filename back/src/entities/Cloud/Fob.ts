@@ -4,8 +4,8 @@ import { User } from "./User";
 @Entity("Fob")
 export class Fob {
   @PrimaryGeneratedColumn()
-  FobID: number;
+  fobid: number;
 
-  @ManyToOne(() => User, (user) => user.Fobs, { nullable: false })
-  UserID: User;
+  @ManyToOne(() => User, (user) => user.fobs, { nullable: false })
+  userid: User;
 }

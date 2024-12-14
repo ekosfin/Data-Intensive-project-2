@@ -6,14 +6,14 @@ import { Role } from "./Role";
 @Entity("Permissions")
 export class Permission {
   @PrimaryGeneratedColumn()
-  PermissionID: number;
+  permissionid: number;
 
-  @ManyToOne(() => User, (user) => user.Permissions, { nullable: false })
-  UserID: User;
+  @ManyToOne(() => User, (user) => user.permissions, { nullable: false })
+  userid: User;
 
-  @ManyToOne(() => Office, (office) => office.Permissions, { nullable: true })
-  OfficeID: Office;
+  @ManyToOne(() => Office, (office) => office.permissions, { nullable: true })
+  officeid: Office;
 
-  @ManyToOne(() => Role, (role) => role.Permissions, { nullable: true })
-  RoleID: Role;
+  @ManyToOne(() => Role, (role) => role.permissions, { nullable: true })
+  roleid: Role;
 }

@@ -4,17 +4,17 @@ import { Permission } from "./Permission";
 @Entity("Offices")
 export class Office {
   @PrimaryGeneratedColumn()
-  OfficeID: number;
+  officeid: number;
 
   @Column({ type: "varchar", length: 100 })
-  Name: string;
+  name: string;
 
   @Column({ type: "text" })
-  ConnectionString: string;
+  connectionstring: string;
 
   @Column({ type: "text" })
-  Address: string;
+  address: string;
 
-  @OneToMany(() => Permission, (permission) => permission.OfficeID)
-  Permissions: Permission[];
+  @OneToMany(() => Permission, (permission) => permission.officeid)
+  permissions: Permission[];
 }

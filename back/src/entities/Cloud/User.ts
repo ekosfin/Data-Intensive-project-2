@@ -6,20 +6,20 @@ import { Fob } from "./Fob";
 @Entity("Users")
 export class User {
   @PrimaryGeneratedColumn()
-  UserID: number;
+  userid: number;
 
   @Column({ type: "varchar", length: 100 })
-  Name: string;
+  name: string;
 
   @Column({ type: "varchar", length: 15 })
-  Phone: string;
+  phone: string;
 
-  @OneToMany(() => Admin, (admin) => admin.UserID)
-  Admins: Admin[];
+  @OneToMany(() => Admin, (admin) => admin.userid)
+  admins: Admin[];
 
-  @OneToMany(() => Permission, (permission) => permission.UserID)
-  Permissions: Permission[];
+  @OneToMany(() => Permission, (permission) => permission.userid)
+  permissions: Permission[];
 
-  @OneToMany(() => Fob, (fob) => fob.UserID)
-  Fobs: Fob[];
+  @OneToMany(() => Fob, (fob) => fob.userid)
+  fobs: Fob[];
 }

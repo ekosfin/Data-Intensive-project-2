@@ -4,11 +4,11 @@ import { User } from "./User";
 @Entity("Admins")
 export class Admin {
   @PrimaryGeneratedColumn()
-  AdminID: number;
+  adminid: number;
 
-  @ManyToOne(() => User, (user) => user.UserID, { nullable: false })
-  UserID: User;
+  @ManyToOne(() => User, (user) => user.userid, { nullable: false })
+  userid: User;
 
   @Column({ type: "text", nullable: true })
-  Permissions: string;
+  permissions: string;
 }
