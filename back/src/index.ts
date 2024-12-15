@@ -14,6 +14,7 @@ import { Room } from "./entities/Office/Rooms";
 import { Fob as OfficeFob } from "./entities/Office/Fob";
 import { Fob as CloudFob } from "./entities/Cloud/Fob";
 import { RoomPermission } from "./entities/Office/RoomPermissions";
+import { seedData } from "./seed";
 
 var cors = require("cors");
 const app = express();
@@ -22,15 +23,20 @@ app.use(cors());
 
 const OfficeSource = {
   1: irelandDataSource,
-  2: germanyDataSource
+  2: germanyDataSource,
 };
 
 async function initializeDatabases() {
   await Promise.all([
     swedenDataSource.initialize(),
-    ...Object.values(OfficeSource).map(entry => entry.initialize()),
+    ...Object.values(OfficeSource).map((entry) => entry.initialize()),
   ]);
   console.log("Databases initialized");
+
+  //await seedData(swedenDataSource, "sweden");
+  //await seedData(irelandDataSource, "ireland");
+  //await seedData(germanyDataSource, "germany");
+  console.log("Data seeded into each database");
 }
 
 app.get("/users", async (req, res) => {
@@ -115,7 +121,9 @@ app.get("/officepermissions/:officeid", async (req, res) => {
   try {
     const officeId = req.params.officeid;
     const dataSource = OfficeSource[officeId];
-    const roompermissions = await dataSource.getRepository(RoomPermission).find();
+    const roompermissions = await dataSource
+      .getRepository(RoomPermission)
+      .find();
     res.json(roompermissions);
   } catch (error) {
     res.status(500).send(`Failed to fetch admins:\n${error}`);
@@ -148,7 +156,9 @@ app.get("/officeroompermissions/:officeid", async (req, res) => {
   try {
     const officeId = req.params.officeid;
     const dataSource = OfficeSource[officeId];
-    const roompermission = await dataSource.getRepository(RoomPermission).find();
+    const roompermission = await dataSource
+      .getRepository(RoomPermission)
+      .find();
     res.json(roompermission);
   } catch (error) {
     res.status(500).send(`Failed to fetch admins:\n${error}`);
