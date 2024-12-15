@@ -1,41 +1,26 @@
-import React, { FC, useState } from "react";
+import { FC, useState } from "react";
 import "../App.css";
-import { Role, User, Office } from "../components";
 import { useDetails } from "../hooks";
+import { OfficeResponse } from "../types";
+import { CloudView } from "./CloudView";
+import { OfficeView } from "./OfficeView";
 
 export const Main: FC = () => {
-  const [ office, setOffice ] = useState('germany');
+  const [ office, setOffice ] = useState<OfficeResponse | null>(null);
   const { users, roles, offices } = useDetails();
 
   return (
     <div className="App">
       <header className="App-header">
-        <p>Selected office: {office}</p>
+        <p>{office ? `Selected office: ${office.name}` : `Select an office`}</p>
         <div className="button-container">
-          <button onClick={() => setOffice("germany")}>Germany</button>
-          <button onClick={() => setOffice("ireland")}>Ireland</button>
+          {offices.map(entry => <button key={entry.officeid} onClick={() => setOffice(entry)}>{entry.name}</button>)}
         </div>
       </header>
-      <div className="content-container">
-      <span className="title">Offices</span>
-        <div className="container">
-          {offices.map((entry) => (
-            <Office key={entry.officeid} {...entry} />
-          ))}
-        </div>
-        <span className="title">Roles</span>
-        <div className="container">
-          {roles.map((entry) => (
-            <Role key={entry.roleid} {...entry} />
-          ))}
-        </div>
-        <span className="title">Users</span>
-        <div className="container wrap">
-          {Array.from(users).map(([key, value]) => (
-            <User key={key} {...value} />
-          ))}
-        </div>
-      </div>
+      <p>Cloud</p>
+      <CloudView users={Array.from(users)} roles={roles} offices={offices} />
+      {office != null ? <p>Office</p> : null}
+      <OfficeView office={office} users={users} />
     </div>
   );
 }

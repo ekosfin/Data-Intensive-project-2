@@ -9,11 +9,22 @@ export type UserResponse = ApiResponse & {
   phone: string;
 };
 
+export type FobResponse = ApiResponse & {
+  fobid: number;
+  userid?: number;
+};
+
 export type PermissionResponse = ApiResponse & {
   permissionid: number;
   userid: number;
-  officeid: number;
+  officeid?: number;
   roleid: number;
+};
+
+export type RoomPermissionResponse = ApiResponse & {
+  roompermissionid: number;
+  permissionid?: number;
+  roomid?: number;
 };
 
 export type OfficeResponse = ApiResponse & {
@@ -30,8 +41,13 @@ export type AdminResponse = ApiResponse & {
 };
 
 export type RoleResponse = ApiResponse & {
-  roleid: string;
+  roleid: number;
   rolename: string;
+};
+
+export type RoomResponse = ApiResponse & {
+  roomid: number;
+  roomname: string;
 };
 
 export type User = UserResponse & {

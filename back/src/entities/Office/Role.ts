@@ -4,11 +4,11 @@ import { Permission } from "./Permissions";
 @Entity("Roles")
 export class Role {
   @PrimaryGeneratedColumn()
-  RoleID: number;
+  roleid: number;
 
   @Column({ type: "varchar", length: 100 })
-  RoleName: string;
+  rolename: string;
 
-  @OneToMany(() => Permission, (permission) => permission.RoleID)
-  Permissions: Permission[];
+  @OneToMany(() => Permission, (permission) => permission.roleid)
+  permissions: Permission[];
 }

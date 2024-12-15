@@ -4,7 +4,13 @@ export enum Route {
   Permissions = "permissions",
   Roles = "roles",
   Offices = "offices",
-  Admins = "admins"
+  Admins = "admins",
+  Fobs = "fobs",
+  OfficeFobs = "officefob",
+  OfficePermissions = "officepermissions",
+  OfficeRole = "officerole",
+  OfficeRooms = "officerooms",
+  OfficeRoomPermissions = "officeroompermissions"
 }
 export enum FormType {
   Name = "joke-name",

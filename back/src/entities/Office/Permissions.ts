@@ -11,17 +11,17 @@ import { RoomPermission } from "./RoomPermissions";
 @Entity("Permissions")
 export class Permission {
   @PrimaryGeneratedColumn()
-  PermissionID: number;
+  permissionid: number;
 
   @Column({ type: "int", nullable: false })
-  UserID: number;
+  userid: number;
 
-  @ManyToOne(() => Role, (role) => role.Permissions, { nullable: false })
-  RoleID: Role;
+  @ManyToOne(() => Role, (role) => role.permissions, { nullable: false })
+  roleid: Role;
 
   @OneToMany(
     () => RoomPermission,
-    (roomPermission) => roomPermission.PermissionID
+    (roomPermission) => roomPermission.permissionid
   )
-  RoomPermissions: RoomPermission[];
+  roompermissions: RoomPermission[];
 }

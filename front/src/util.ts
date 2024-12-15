@@ -1,17 +1,8 @@
 import { backendUrl, Route } from "./constants";
-import { AdminResponse, OfficeResponse, PermissionResponse, RoleResponse, UserResponse } from "./types";
+import { AdminResponse, FobResponse, OfficeResponse, PermissionResponse, RoleResponse, RoomPermissionResponse, RoomResponse, UserResponse } from "./types";
 
-export const fetchApi = async (route: Route, region: number) => {
-  const res = await fetch(`${backendUrl}${route}?region=${region}`);
-  if (!res.ok) {
-    console.error("Failed to fetch");
-    return null;
-  }
-  return res.json();
-};
-
-export const fetchData = async <T>(route: Route): Promise<T|null> => {
-  const res = await fetch(`${backendUrl}${route}`, {
+export const fetchData = async <T>(route: Route, query?: string): Promise<T|null> => {
+  const res = await fetch(`${backendUrl}${route}/${query ? query : ''}`, {
     method: "GET",
   });
   if (!res.ok) {
@@ -45,6 +36,32 @@ export const fetchAdmins = async () => {
   console.log("Admins");
   return fetchData<AdminResponse[]>(Route.Admins);
 };
+
+export const fetchOfficeFobs = async (office: number) => {
+  console.log("OfficeFobs");
+  return fetchData<FobResponse[]>(Route.OfficeFobs, office.toString());
+};
+
+export const fetchOfficeRooms = (office: number) => {
+  console.log("OfficeRooms");
+  return fetchData<RoomResponse[]>(Route.OfficeRooms, office.toString());
+}
+
+export const fetchOfficePermissions = (office: number) => {
+  console.log("OfficePermissions");
+  return fetchData<PermissionResponse[]>(Route.OfficePermissions, office.toString());
+}
+
+export const fetchOfficeRoomPermissions = (office: number) => {
+  console.log("OfficeRoomPermissions");
+  return fetchData<RoomPermissionResponse[]>(Route.OfficeRoomPermissions, office.toString());
+}
+
+export const fetchOfficeRoles = (office: number) => {
+  console.log("OfficeRoles");
+  return fetchData<RoleResponse[]>(Route.OfficeRole, office.toString());
+}
+
 /* 
 export const postMongoJoke = async (value: CreateJoke) => {
   const res = await fetch(`${backendUrl}${Route.MongoJoke}`, {

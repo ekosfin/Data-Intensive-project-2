@@ -5,13 +5,13 @@ import { Room } from "./Rooms";
 @Entity("RoomPermissions")
 export class RoomPermission {
   @PrimaryGeneratedColumn()
-  RoomPermissionID: number;
+  roompermissionid: number;
 
-  @ManyToOne(() => Permission, (permission) => permission.RoomPermissions, {
+  @ManyToOne(() => Permission, (permission) => permission.roompermissions, {
     nullable: false,
   })
-  PermissionID: Permission;
+  permissionid: Permission;
 
-  @ManyToOne(() => Room, (room) => room.RoomPermissions, { nullable: false })
-  RoomID: Room;
+  @ManyToOne(() => Room, (room) => room.roompermissions, { nullable: false })
+  roomid: Room;
 }

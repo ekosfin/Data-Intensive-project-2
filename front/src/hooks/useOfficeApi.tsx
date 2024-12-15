@@ -1,32 +1,33 @@
 import { useEffect, useState } from "react";
-import { fetchAdmins, fetchOffices, fetchPermissions, fetchRoles, fetchUsers } from "../util";
-import { AdminResponse, OfficeResponse, PermissionResponse, RoleResponse, UserResponse } from "../types";
+import { FobResponse, PermissionResponse, RoleResponse, RoomPermissionResponse, RoomResponse } from "../types";
+import { fetchOfficeFobs, fetchOfficePermissions, fetchOfficeRoles, fetchOfficeRoomPermissions, fetchOfficeRooms } from "../util";
 
-export const useOfficeApi = (office: string) => {
-  const [offices, setOffices] = useState<OfficeResponse[]>([]);
-  const [users, setUsers] = useState<UserResponse[]>([]);
+export const useOfficeApi = (officeid?: number) => {
+  const [fobs, setFobs] = useState<FobResponse[]>([]);
+  const [rooms, setRooms] = useState<RoomResponse[]>([]);
+  const [roomPermissions, setRoomPermissions] = useState<RoomPermissionResponse[]>([]);
   const [permissions, setPermissions] = useState<PermissionResponse[]>([]);
-  const [admins, setAdmins] = useState<AdminResponse[]>([]);
   const [roles, setRoles] = useState<RoleResponse[]>([]);
 
   useEffect(() => {
+    if (officeid === undefined) return;
     let active = true;
     const stuff = async () => {
-      const tempUsers = fetchUsers();
-      const tempOffices = fetchOffices();
-      const tempPermissions = fetchPermissions();
-      const tempAdmins = fetchAdmins();
-      const tempRoles = fetchRoles();
-      if (active) setUsers(await tempUsers ?? []);
-      if (active) setOffices(await tempOffices ?? []);
+      const tempFobs = fetchOfficeFobs(officeid);
+      const tempRooms = fetchOfficeRooms(officeid);
+      const tempRoomPermissions = fetchOfficeRoomPermissions(officeid);
+      const tempPermissions = fetchOfficePermissions(officeid);
+      const tempRoles = fetchOfficeRoles(officeid);
+      if (active) setFobs(await tempFobs ?? []);
+      if (active) setRooms(await tempRooms ?? []);
+      if (active) setRoomPermissions(await tempRoomPermissions ?? []);
       if (active) setPermissions(await tempPermissions ?? []);
-      if (active) setAdmins(await tempAdmins ?? []);
       if (active) setRoles(await tempRoles ?? []);
     };
     stuff();
     return () => {
       active = false;
     };
-  }, []);
-  return { users, offices, permissions, admins, roles };
+  }, [officeid]);
+  return { fobs, rooms, permissions, roomPermissions, roles };
 };

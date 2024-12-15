@@ -4,11 +4,11 @@ import { RoomPermission } from "./RoomPermissions";
 @Entity("Rooms")
 export class Room {
   @PrimaryGeneratedColumn()
-  RoomID: number;
+  roomid: number;
 
   @Column({ type: "varchar", length: 100 })
-  RoomName: string;
+  roomname: string;
 
-  @OneToMany(() => RoomPermission, (roomPermission) => roomPermission.RoomID)
-  RoomPermissions: RoomPermission[];
+  @OneToMany(() => RoomPermission, (roomPermission) => roomPermission.roomid)
+  roompermissions: RoomPermission[];
 }

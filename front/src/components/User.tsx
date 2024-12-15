@@ -1,9 +1,11 @@
 import { FC } from "react";
 import { UserResponse } from "../types";
 
-export const User: FC<
-  UserResponse
-> = (props) => {
+type Props = UserResponse & {
+  fobid?: number;
+};
+
+export const User: FC<Props> = (props) => {
   return (
     <div className="item joke">
       <div className="joke-attributes">
