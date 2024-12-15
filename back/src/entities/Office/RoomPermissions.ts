@@ -1,17 +1,15 @@
-import { Entity, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, ManyToOne, Column } from "typeorm";
 import { Permission } from "./Permissions";
 import { Room } from "./Rooms";
 
-@Entity("RoomPermissions")
+@Entity("roompermissions")
 export class RoomPermission {
   @PrimaryGeneratedColumn()
   roompermissionid: number;
 
-  @ManyToOne(() => Permission, (permission) => permission.roompermissions, {
-    nullable: false,
-  })
+  @Column({ type: "int", nullable: false })
   permissionid: Permission;
 
-  @ManyToOne(() => Room, (room) => room.roompermissions, { nullable: false })
+  @Column({ type: "int", nullable: false })
   roomid: Room;
 }

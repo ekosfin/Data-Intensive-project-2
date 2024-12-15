@@ -45,6 +45,7 @@ app.get("/users", async (req, res) => {
     res.json(users);
   } catch (error) {
     res.status(500).send("Failed to fetch users.");
+    console.log(error);
   }
 });
 
@@ -58,6 +59,7 @@ app.post("/users", async (req, res) => {
     res.status(201).json(newUser);
   } catch (error) {
     res.status(500).send("Failed to add user.");
+    console.log(error);
   }
 });
 
@@ -67,6 +69,7 @@ app.get("/roles", async (req, res) => {
     res.json(roles);
   } catch (error) {
     res.status(500).send("Failed to fetch roles.");
+    console.log(error);
   }
 });
 
@@ -76,6 +79,7 @@ app.get("/permissions", async (req, res) => {
     res.json(permissions);
   } catch (error) {
     res.status(500).send("Failed to fetch permissions.");
+    console.log(error);
   }
 });
 
@@ -85,15 +89,17 @@ app.get("/admins", async (req, res) => {
     res.json(admins);
   } catch (error) {
     res.status(500).send("Failed to fetch offices.");
+    console.log(error);
   }
 });
 
 app.get("/offices", async (req, res) => {
   try {
     const offices = await swedenDataSource.getRepository(Office).find();
-    res.json(offices);
+    res.json(offices.slice(0, 2));
   } catch (error) {
     res.status(500).send("Failed to fetch offices.");
+    console.log(error);
   }
 });
 
@@ -103,6 +109,7 @@ app.get("/fobs", async (req, res) => {
     res.json(fobs);
   } catch (error) {
     res.status(500).send("Failed to fetch fobs.");
+    console.log(error);
   }
 });
 
@@ -114,6 +121,7 @@ app.get("/officefob/:officeid", async (req, res) => {
     res.json(fobs);
   } catch (error) {
     res.status(500).send(`Failed to fetch admins:\n${error}`);
+    console.log(error);
   }
 });
 
@@ -127,6 +135,7 @@ app.get("/officepermissions/:officeid", async (req, res) => {
     res.json(roompermissions);
   } catch (error) {
     res.status(500).send(`Failed to fetch admins:\n${error}`);
+    console.log(error);
   }
 });
 
@@ -138,6 +147,7 @@ app.get("/officerole/:officeid", async (req, res) => {
     res.json(roles);
   } catch (error) {
     res.status(500).send(`Failed to fetch admins:\n${error}`);
+    console.log(error);
   }
 });
 
@@ -149,6 +159,7 @@ app.get("/officerooms/:officeid", async (req, res) => {
     res.json(rooms);
   } catch (error) {
     res.status(500).send(`Failed to fetch admins:\n${error}`);
+    console.log(error);
   }
 });
 
@@ -162,6 +173,7 @@ app.get("/officeroompermissions/:officeid", async (req, res) => {
     res.json(roompermission);
   } catch (error) {
     res.status(500).send(`Failed to fetch admins:\n${error}`);
+    console.log(error);
   }
 });
 app.delete("users/:id", async (req, res) => {
@@ -171,6 +183,7 @@ app.delete("users/:id", async (req, res) => {
     res.status(204).send();
   } catch (error) {
     res.status(500).send("Failed to delete user.");
+    console.log(error);
   }
 });
 

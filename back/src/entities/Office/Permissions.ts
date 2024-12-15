@@ -8,7 +8,7 @@ import {
 import { Role } from "../Office/Role";
 import { RoomPermission } from "./RoomPermissions";
 
-@Entity("Permissions")
+@Entity("permissions")
 export class Permission {
   @PrimaryGeneratedColumn()
   permissionid: number;
@@ -16,12 +16,6 @@ export class Permission {
   @Column({ type: "int", nullable: false })
   userid: number;
 
-  @ManyToOne(() => Role, (role) => role.permissions, { nullable: false })
-  roleid: Role;
-
-  @OneToMany(
-    () => RoomPermission,
-    (roomPermission) => roomPermission.permissionid
-  )
-  roompermissions: RoomPermission[];
+  @Column({ type: "int", nullable: false })
+  roleid: number;
 }

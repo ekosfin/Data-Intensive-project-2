@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 import { Permission } from "./Permission";
 
-@Entity("Offices")
+@Entity("offices")
 export class Office {
   @PrimaryGeneratedColumn()
   officeid: number;
@@ -14,7 +14,4 @@ export class Office {
 
   @Column({ type: "text" })
   address: string;
-
-  @OneToMany(() => Permission, (permission) => permission.officeid)
-  permissions: Permission[];
 }

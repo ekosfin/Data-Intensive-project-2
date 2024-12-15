@@ -1,12 +1,12 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
 import { User } from "./User";
 
-@Entity("Admins")
+@Entity("admins")
 export class Admin {
   @PrimaryGeneratedColumn()
   adminid: number;
 
-  @ManyToOne(() => User, (user) => user.userid, { nullable: false })
+  @Column({ type: "int", nullable: false })
   userid: User;
 
   @Column({ type: "text", nullable: true })

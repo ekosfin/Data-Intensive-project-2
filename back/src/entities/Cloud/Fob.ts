@@ -1,11 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, ManyToOne, Column } from "typeorm";
 import { User } from "./User";
 
-@Entity("Fob")
+@Entity("fob")
 export class Fob {
   @PrimaryGeneratedColumn()
   fobid: number;
 
-  @ManyToOne(() => User, (user) => user.fobs, { nullable: false })
+  @Column({ type: "int", nullable: false })
   userid: User;
 }
