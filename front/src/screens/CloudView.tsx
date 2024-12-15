@@ -17,7 +17,7 @@ export const CloudView: FC<Props> = ({ users, roles, offices }) =>
           ))}
         </div>
         <span className="title">Roles</span>
-        <div className="container">
+        <div className="container wrap">
           {roles.map((entry) => (
             <Role key={entry.roleid} {...entry} />
           ))}

@@ -14,7 +14,7 @@ import { Room } from "./entities/Office/Rooms";
 import { Fob as OfficeFob } from "./entities/Office/Fob";
 import { Fob as CloudFob } from "./entities/Cloud/Fob";
 import { RoomPermission } from "./entities/Office/RoomPermissions";
-import { seedData } from "./seed";
+import { Permission as OfficePermission } from "./entities/Office/Permissions";
 
 var cors = require("cors");
 const app = express();
@@ -185,16 +185,16 @@ app.get("/officepermissions/:officeid", async (req, res) => {
     const officeId = req.params.officeid;
     if (officeId == "3") {
       const irelandRoomPermission = await irelandDataSource
-        .getRepository(RoomPermission)
+        .getRepository(OfficePermission)
         .find();
       const germanyRoomPermission = await germanyDataSource
-        .getRepository(RoomPermission)
+        .getRepository(OfficePermission)
         .find();
       res.json(irelandRoomPermission.concat(germanyRoomPermission));
     } else {
       const dataSource = OfficeSource[officeId];
       const roompermissions = await dataSource
-        .getRepository(RoomPermission)
+        .getRepository(OfficePermission)
         .find();
       res.json(roompermissions);
     }

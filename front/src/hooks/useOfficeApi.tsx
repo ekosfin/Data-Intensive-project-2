@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { FobResponse, PermissionResponse, RoleResponse, RoomPermissionResponse, RoomResponse } from "../types";
+import { FobResponse, OfficePermissionResponse, RoleResponse, RoomPermissionResponse, RoomResponse } from "../types";
 import { fetchOfficeFobs, fetchOfficePermissions, fetchOfficeRoles, fetchOfficeRoomPermissions, fetchOfficeRooms } from "../util";
 
 export const useOfficeApi = (officeid?: number) => {
   const [fobs, setFobs] = useState<FobResponse[]>([]);
   const [rooms, setRooms] = useState<RoomResponse[]>([]);
   const [roomPermissions, setRoomPermissions] = useState<RoomPermissionResponse[]>([]);
-  const [permissions, setPermissions] = useState<PermissionResponse[]>([]);
+  const [permissions, setPermissions] = useState<OfficePermissionResponse[]>([]);
   const [roles, setRoles] = useState<RoleResponse[]>([]);
 
   useEffect(() => {

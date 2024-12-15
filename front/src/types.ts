@@ -21,6 +21,12 @@ export type PermissionResponse = ApiResponse & {
   roleid: number;
 };
 
+export type OfficePermissionResponse = ApiResponse & {
+  permissionid: number;
+  userid: number;
+  roleid: number;
+}
+
 export type RoomPermissionResponse = ApiResponse & {
   roompermissionid: number;
   permissionid?: number;

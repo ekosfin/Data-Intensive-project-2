@@ -39,8 +39,8 @@ export const OfficeView: FC<Props> = ({ office, users }) => {
   return (
     <div className="content-container">
       <span className="title">Rooms</span>
-      <div className="container">
-        {Array.from(data).map(([key, value]) => (
+      <div className="container wrap">
+        {Array.from(data).map(([key, value], index) => (
           <Room key={key} {...value} />
         ))}
       </div>

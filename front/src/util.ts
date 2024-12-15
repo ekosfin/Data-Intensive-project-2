@@ -1,5 +1,5 @@
 import { backendUrl, Route } from "./constants";
-import { AdminResponse, FobResponse, OfficeResponse, PermissionResponse, RoleResponse, RoomPermissionResponse, RoomResponse, UserResponse } from "./types";
+import { AdminResponse, FobResponse, OfficePermissionResponse, OfficeResponse, PermissionResponse, RoleResponse, RoomPermissionResponse, RoomResponse, UserResponse } from "./types";
 
 export const fetchData = async <T>(route: Route, query?: string): Promise<T|null> => {
   const res = await fetch(`${backendUrl}${route}/${query ? query : ''}`, {
@@ -49,7 +49,7 @@ export const fetchOfficeRooms = (office: number) => {
 
 export const fetchOfficePermissions = (office: number) => {
   console.log("OfficePermissions");
-  return fetchData<PermissionResponse[]>(Route.OfficePermissions, office.toString());
+  return fetchData<OfficePermissionResponse[]>(Route.OfficePermissions, office.toString());
 }
 
 export const fetchOfficeRoomPermissions = (office: number) => {
