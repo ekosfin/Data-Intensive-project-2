@@ -36,7 +36,7 @@ async function initializeDatabases() {
   //await seedData(swedenDataSource, "sweden");
   //await seedData(irelandDataSource, "ireland");
   //await seedData(germanyDataSource, "germany");
-  console.log("Data seeded into each database");
+  //console.log("Data seeded into each database");
 }
 
 app.get("/users", async (req, res) => {
