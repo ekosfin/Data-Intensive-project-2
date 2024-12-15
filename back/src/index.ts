@@ -77,7 +77,9 @@ app.delete("/users/:id", async (req, res) => {
 app.patch("/users/:id", async (req, res) => {
   const userid = parseInt(req.params.id);
   const { phone } = req.body;
-
+  console.log(req.body);
+  console.log(phone);
+  console.log(userid);
   try {
     const user = await swedenDataSource
       .getRepository(User)
@@ -87,7 +89,6 @@ app.patch("/users/:id", async (req, res) => {
       res.status(404).send("User not found.");
       return;
     }
-    console.log(phone);
     if (phone) {
       user.phone = phone;
       await swedenDataSource.getRepository(User).save(user);

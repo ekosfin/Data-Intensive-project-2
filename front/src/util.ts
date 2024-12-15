@@ -37,6 +37,20 @@ export const fetchAdmins = async () => {
   return fetchData<AdminResponse[]>(Route.Admins);
 };
 
+export const patchUser = async (id: number) => {
+  const res = await fetch(`${backendUrl}users/${id}`, {
+    method: "PATCH",
+    body: JSON.stringify({
+      phone: Math.random().toString(),
+    }),
+  });
+  if (!res.ok) {
+    console.error("Failed to fetch");
+    return null;
+  }
+  return res.json();
+}
+
 export const fetchOfficeFobs = async (office: number) => {
   console.log("OfficeFobs");
   return fetchData<FobResponse[]>(Route.OfficeFobs, office.toString());
