@@ -63,6 +63,44 @@ app.post("/users", async (req, res) => {
   }
 });
 
+app.delete("/users/:id", async (req, res) => {
+  const userid = parseInt(req.params.id);
+  try {
+    await swedenDataSource.getRepository(User).delete({ userid });
+    res.status(204).send();
+  } catch (error) {
+    res.status(500).send("Failed to delete user.");
+    console.log(error);
+  }
+});
+
+app.patch("/users/:id", async (req, res) => {
+  const userid = parseInt(req.params.id);
+  const { phone } = req.body;
+
+  try {
+    const user = await swedenDataSource
+      .getRepository(User)
+      .findOne({ where: { userid } });
+
+    if (!user) {
+      res.status(404).send("User not found.");
+      return;
+    }
+    console.log(phone);
+    if (phone) {
+      user.phone = phone;
+      await swedenDataSource.getRepository(User).save(user);
+      res.status(200).json(user);
+    } else {
+      res.status(400).send("Phone number is required.");
+    }
+  } catch (error) {
+    res.status(500).send("Failed to update user.");
+    console.log(error);
+  }
+});
+
 app.get("/roles", async (req, res) => {
   try {
     const roles = await swedenDataSource.getRepository(CloudRole).find();
@@ -96,7 +134,14 @@ app.get("/admins", async (req, res) => {
 app.get("/offices", async (req, res) => {
   try {
     const offices = await swedenDataSource.getRepository(Office).find();
-    res.json(offices.slice(0, 2));
+    let mainOffices = offices.slice(0, 2);
+    mainOffices.push({
+      officeid: 3,
+      name: "All Offices",
+      connectionstring: "",
+      address: "",
+    });
+    res.json(mainOffices);
   } catch (error) {
     res.status(500).send("Failed to fetch offices.");
     console.log(error);
@@ -116,9 +161,19 @@ app.get("/fobs", async (req, res) => {
 app.get("/officefob/:officeid", async (req, res) => {
   try {
     const officeId = req.params.officeid;
-    const dataSource = OfficeSource[officeId];
-    const fobs = await dataSource.getRepository(OfficeFob).find();
-    res.json(fobs);
+    if (officeId == "3") {
+      const irelandFobs = await irelandDataSource
+        .getRepository(OfficeFob)
+        .find();
+      const germanyFobs = await germanyDataSource
+        .getRepository(OfficeFob)
+        .find();
+      res.json(irelandFobs.concat(germanyFobs));
+    } else {
+      const dataSource = OfficeSource[officeId];
+      const fobs = await dataSource.getRepository(OfficeFob).find();
+      res.json(fobs);
+    }
   } catch (error) {
     res.status(500).send(`Failed to fetch admins:\n${error}`);
     console.log(error);
@@ -128,11 +183,21 @@ app.get("/officefob/:officeid", async (req, res) => {
 app.get("/officepermissions/:officeid", async (req, res) => {
   try {
     const officeId = req.params.officeid;
-    const dataSource = OfficeSource[officeId];
-    const roompermissions = await dataSource
-      .getRepository(RoomPermission)
-      .find();
-    res.json(roompermissions);
+    if (officeId == "3") {
+      const irelandRoomPermission = await irelandDataSource
+        .getRepository(RoomPermission)
+        .find();
+      const germanyRoomPermission = await germanyDataSource
+        .getRepository(RoomPermission)
+        .find();
+      res.json(irelandRoomPermission.concat(germanyRoomPermission));
+    } else {
+      const dataSource = OfficeSource[officeId];
+      const roompermissions = await dataSource
+        .getRepository(RoomPermission)
+        .find();
+      res.json(roompermissions);
+    }
   } catch (error) {
     res.status(500).send(`Failed to fetch admins:\n${error}`);
     console.log(error);
@@ -142,9 +207,19 @@ app.get("/officepermissions/:officeid", async (req, res) => {
 app.get("/officerole/:officeid", async (req, res) => {
   try {
     const officeId = req.params.officeid;
-    const dataSource = OfficeSource[officeId];
-    const roles = await dataSource.getRepository(OfficeRole).find();
-    res.json(roles);
+    if (officeId == "3") {
+      const irelandOfficeRole = await irelandDataSource
+        .getRepository(OfficeRole)
+        .find();
+      const germanyOfficeRole = await germanyDataSource
+        .getRepository(OfficeRole)
+        .find();
+      res.json(irelandOfficeRole.concat(germanyOfficeRole));
+    } else {
+      const dataSource = OfficeSource[officeId];
+      const roles = await dataSource.getRepository(OfficeRole).find();
+      res.json(roles);
+    }
   } catch (error) {
     res.status(500).send(`Failed to fetch admins:\n${error}`);
     console.log(error);
@@ -154,9 +229,15 @@ app.get("/officerole/:officeid", async (req, res) => {
 app.get("/officerooms/:officeid", async (req, res) => {
   try {
     const officeId = req.params.officeid;
-    const dataSource = OfficeSource[officeId];
-    const rooms = await dataSource.getRepository(Room).find();
-    res.json(rooms);
+    if (officeId == "3") {
+      const irelandRoom = await irelandDataSource.getRepository(Room).find();
+      const germanyRoom = await germanyDataSource.getRepository(Room).find();
+      res.json(irelandRoom.concat(germanyRoom));
+    } else {
+      const dataSource = OfficeSource[officeId];
+      const rooms = await dataSource.getRepository(Room).find();
+      res.json(rooms);
+    }
   } catch (error) {
     res.status(500).send(`Failed to fetch admins:\n${error}`);
     console.log(error);
@@ -166,23 +247,23 @@ app.get("/officerooms/:officeid", async (req, res) => {
 app.get("/officeroompermissions/:officeid", async (req, res) => {
   try {
     const officeId = req.params.officeid;
-    const dataSource = OfficeSource[officeId];
-    const roompermission = await dataSource
-      .getRepository(RoomPermission)
-      .find();
-    res.json(roompermission);
+    if (officeId == "3") {
+      const irelandRoomPermission = await irelandDataSource
+        .getRepository(RoomPermission)
+        .find();
+      const germanyRoomPermission = await germanyDataSource
+        .getRepository(RoomPermission)
+        .find();
+      res.json(irelandRoomPermission.concat(germanyRoomPermission));
+    } else {
+      const dataSource = OfficeSource[officeId];
+      const roompermission = await dataSource
+        .getRepository(RoomPermission)
+        .find();
+      res.json(roompermission);
+    }
   } catch (error) {
     res.status(500).send(`Failed to fetch admins:\n${error}`);
-    console.log(error);
-  }
-});
-app.delete("users/:id", async (req, res) => {
-  const userid = parseInt(req.params.id);
-  try {
-    await swedenDataSource.getRepository(User).delete({ userid });
-    res.status(204).send();
-  } catch (error) {
-    res.status(500).send("Failed to delete user.");
     console.log(error);
   }
 });
